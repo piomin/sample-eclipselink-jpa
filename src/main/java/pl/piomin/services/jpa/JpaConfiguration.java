@@ -34,7 +34,8 @@ public class JpaConfiguration extends JpaBaseConfiguration {
 	protected Map<String, Object> getVendorProperties() {
 	    HashMap<String, Object> map = new HashMap<>();
 	    map.put(PersistenceUnitProperties.WEAVING, InstrumentationLoadTimeWeaver.isInstrumentationAvailable() ? "true" : "static");
-	    map.put(PersistenceUnitProperties.DDL_GENERATION, "drop-and-create-tables");
+	    map.put(PersistenceUnitProperties.DDL_GENERATION, "create-or-extend-tables");
+	    map.put(PersistenceUnitProperties.LOGGING_LEVEL, "FINE");
 	    return map;
 	}
 	

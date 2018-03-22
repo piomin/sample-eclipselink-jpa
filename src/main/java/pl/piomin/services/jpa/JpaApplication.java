@@ -18,7 +18,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class JpaApplication {
 
 	public static void main(String[] args) {
-		new SpringApplicationBuilder(JpaApplication.class).web(WebApplicationType.NONE).run(args);
+		System.setProperty("eclipselink.cache.database-event-listener", "org.eclipse.persistence.platform.database.oracle.dcn.OracleChangeNotificationListener");
+		new SpringApplicationBuilder(JpaApplication.class).web(WebApplicationType.SERVLET).run(args);
 	}
 	
 	@Bean
