@@ -1,50 +1,58 @@
 package pl.piomin.services.jpa.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import pl.piomin.services.jpa.model.Order;
+import pl.piomin.services.jpa.repository.OrderRepository;
+
 @RestController
 @RequestMapping("/order")
 public class OrderController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(CustomerController.class);
-	
-	private ObjectMapper mapper = new ObjectMapper();
+	private static final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
 	
 	@Autowired
-	AccountClient accountClient;
-	@Autowired
-	CustomerRepository repository;
+	OrderRepository repository;
 	
 	@PostMapping
-	public Customer add(@RequestBody Customer customer) {
-		return repository.save(customer);
+	public Order add(@RequestBody Order order) {
+		LOGGER.info("Add order: {}", order);
+		return repository.save(order);
 	}
 	
 	@PutMapping
-	public Customer update(@RequestBody Customer customer) {
-		return repository.save(customer);
+	public Order update(@RequestBody Order order) {
+		LOGGER.info("Update order: {}", order);
+		return repository.save(order);
 	}
 	
 	@GetMapping("/{id}")
-	public Customer findById(@PathVariable("id") String id) {
-		return repository.findOne(id);
+	public Order findById(@PathVariable("id") Long id) {
+		LOGGER.info("Find order: id={}", id);
+		return repository.findById(id).get();
 	}
 	
-	@GetMapping("/withAccounts/{id}")
-	public Customer findByIdWithAccounts(@PathVariable("id") String id) throws JsonProcessingException {
-		List<Account> accounts = accountClient.findByCustomer(id);
-		LOGGER.info("Accounts found: {}", mapper.writeValueAsString(accounts));
-		Customer c = repository.findOne(id);
-		c.setAccounts(accounts);
-		return c;
-	}
 	
-	@PostMapping("/ids")
-	public List<Customer> find(@RequestBody List<String> ids) {
-		return repository.findByIdIn(ids);
+	@GetMapping
+	public Iterable<Order> findAll() {
+		LOGGER.info("Find orders");
+		return repository.findAll();
 	}
 	
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable("id") String id) {
-		repository.delete(id);
+	public void delete(@PathVariable("id") Long id) {
+		LOGGER.info("Delete order: id={}", id);
+		repository.deleteById(id);
 	}
 	
 }

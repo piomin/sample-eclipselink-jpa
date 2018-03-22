@@ -1,7 +1,5 @@
 package pl.piomin.services.jpa.controller;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,28 +25,33 @@ public class ProductController {
 	ProductRepository repository;
 	
 	@PostMapping
-	public Product add(@RequestBody Product Product) {
-		return repository.save(Product);
+	public Product add(@RequestBody Product product) {
+		LOGGER.info("Add product: {}", product);
+		return repository.save(product);
 	}
 	
 	@PutMapping
-	public Product update(@RequestBody Product Product) {
-		return repository.save(Product);
+	public Product update(@RequestBody Product product) {
+		LOGGER.info("Update product: {}", product);
+		return repository.save(product);
 	}
 	
 	@GetMapping("/{id}")
 	public Product findById(@PathVariable("id") Long id) {
+		LOGGER.info("Find product: id={}", id);
 		return repository.findById(id).get();
 	}
 	
 	
 	@GetMapping
 	public Iterable<Product> findAll() {
+		LOGGER.info("Find products");
 		return repository.findAll();
 	}
 	
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable("id") Long id) {
+		LOGGER.info("Delete product: id={}", id);
 		repository.deleteById(id);
 	}
 	

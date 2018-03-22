@@ -1,7 +1,5 @@
 package pl.piomin.services.jpa.controller;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +26,13 @@ public class CustomerController {
 	
 	@PostMapping
 	public Customer add(@RequestBody Customer customer) {
+		LOGGER.info("Add product: {}", customer);
 		return repository.save(customer);
 	}
 	
 	@PutMapping
 	public Customer update(@RequestBody Customer customer) {
+		LOGGER.info("Update product: {}", customer);
 		return repository.save(customer);
 	}
 	

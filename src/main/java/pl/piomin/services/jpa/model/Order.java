@@ -2,6 +2,8 @@ package pl.piomin.services.jpa.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -9,6 +11,7 @@ import javax.persistence.ManyToOne;
 public class Order {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	@ManyToOne
 	private Product product;
@@ -46,6 +49,11 @@ public class Order {
 
 	public void setCount(int count) {
 		this.count = count;
+	}
+
+	@Override
+	public String toString() {
+		return "Order [id=" + id + ", product=" + product + ", status=" + status + ", count=" + count + "]";
 	}
 
 }
