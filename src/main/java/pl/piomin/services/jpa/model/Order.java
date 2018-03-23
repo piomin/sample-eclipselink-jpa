@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 @Entity
 @Table(name = "JPA_ORDER")
@@ -18,10 +19,15 @@ public class Order {
 	@GeneratedValue(generator = "orderSequence", strategy = GenerationType.SEQUENCE)
 	private Long id;
 	@ManyToOne
+	private Customer customer;
+	@ManyToOne
 	private Product product;
 	@Enumerated
 	private OrderStatus status;
 	private int count;
+	
+	@Version
+	private long version;
 
 	public Long getId() {
 		return id;
@@ -29,6 +35,14 @@ public class Order {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	public Product getProduct() {
@@ -53,6 +67,14 @@ public class Order {
 
 	public void setCount(int count) {
 		this.count = count;
+	}
+
+	public long getVersion() {
+		return version;
+	}
+
+	public void setVersion(long version) {
+		this.version = version;
 	}
 
 	@Override
