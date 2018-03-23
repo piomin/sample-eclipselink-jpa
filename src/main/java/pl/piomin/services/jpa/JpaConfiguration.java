@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.eclipse.persistence.config.PersistenceUnitProperties;
+import org.eclipse.persistence.logging.SessionLog;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration;
@@ -35,8 +36,9 @@ public class JpaConfiguration extends JpaBaseConfiguration {
 	    HashMap<String, Object> map = new HashMap<>();
 	    map.put(PersistenceUnitProperties.WEAVING, InstrumentationLoadTimeWeaver.isInstrumentationAvailable() ? "true" : "static");
 	    map.put(PersistenceUnitProperties.DDL_GENERATION, "create-or-extend-tables");
-	    map.put(PersistenceUnitProperties.LOGGING_LEVEL, "FINE");
+	    map.put(PersistenceUnitProperties.LOGGING_LEVEL, SessionLog.FINEST_LABEL);
+	    map.put(PersistenceUnitProperties.DATABASE_EVENT_LISTENER, "org.eclipse.persistence.platform.database.oracle.dcn.OracleChangeNotificationListener");
 	    return map;
 	}
-	
+    
 }

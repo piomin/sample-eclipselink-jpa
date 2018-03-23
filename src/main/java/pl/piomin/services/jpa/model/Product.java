@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 @Entity
 @Table(name = "JPA_PRODUCT")
@@ -19,6 +20,9 @@ public class Product {
 	private String model;
 	private int price;
 
+	@Version
+	private long version;
+	
 	public Long getId() {
 		return id;
 	}
@@ -49,6 +53,19 @@ public class Product {
 
 	public void setPrice(int price) {
 		this.price = price;
+	}
+
+	public long getVersion() {
+		return version;
+	}
+
+	public void setVersion(long version) {
+		this.version = version;
+	}
+
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + ", model=" + model + ", price=" + price + "]";
 	}
 
 }

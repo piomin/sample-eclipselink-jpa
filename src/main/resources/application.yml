@@ -1,11 +1,6 @@
 spring:
   application:
     name: jpa-service
-  datasource:
-    url: jdbc:oracle:thin:@192.168.99.100:1521:xe
-    username: piomin
-    password: Piot_123
-    driverClassName: oracle.jdbc.driver.OracleDriver
     
 server:  
   port: ${PORT:8090}
