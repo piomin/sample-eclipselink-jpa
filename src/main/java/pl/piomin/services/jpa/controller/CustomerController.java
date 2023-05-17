@@ -19,37 +19,37 @@ import pl.piomin.services.jpa.repository.CustomerRepository;
 @RequestMapping("/customer")
 public class CustomerController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(CustomerController.class);
-	
-	@Autowired
-	CustomerRepository repository;
-	
-	@PostMapping
-	public Customer add(@RequestBody Customer customer) {
-		LOGGER.info("Add product: {}", customer);
-		return repository.save(customer);
-	}
-	
-	@PutMapping
-	public Customer update(@RequestBody Customer customer) {
-		LOGGER.info("Update product: {}", customer);
-		return repository.save(customer);
-	}
-	
-	@GetMapping("/{id}")
-	public Customer findById(@PathVariable("id") Long id) {
-		return repository.findById(id).get();
-	}
-	
-	
-	@GetMapping
-	public Iterable<Customer> findAll() {
-		return repository.findAll();
-	}
-	
-	@DeleteMapping("/{id}")
-	public void delete(@PathVariable("id") Long id) {
-		repository.deleteById(id);
-	}
-	
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomerController.class);
+
+    @Autowired
+    CustomerRepository repository;
+
+    @PostMapping
+    public Customer add(@RequestBody Customer customer) {
+        LOGGER.info("Add product: {}", customer);
+        return repository.save(customer);
+    }
+
+    @PutMapping
+    public Customer update(@RequestBody Customer customer) {
+        LOGGER.info("Update product: {}", customer);
+        return repository.save(customer);
+    }
+
+    @GetMapping("/{id}")
+    public Customer findById(@PathVariable("id") Long id) {
+        return repository.findById(id).orElseThrow();
+    }
+
+
+    @GetMapping
+    public Iterable<Customer> findAll() {
+        return repository.findAll();
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable("id") Long id) {
+        repository.deleteById(id);
+    }
+
 }
