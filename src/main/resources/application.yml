@@ -5,6 +5,7 @@ spring:
     url: jdbc:oracle:thin:@localhost:1521/eclipselink
     username: piomin
     password: piomin123
+    driver-class-name: oracle.jdbc.OracleDriver
     type: oracle.ucp.jdbc.UCPDataSource
     oracleucp:
       connection-factory-class-name: oracle.jdbc.pool.OracleDataSource
