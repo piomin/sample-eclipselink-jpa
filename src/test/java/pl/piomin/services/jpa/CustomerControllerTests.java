@@ -23,7 +23,7 @@ public class CustomerControllerTests {
 
     @Container
     static final OracleContainer oracle = new OracleContainer("gvenzl/oracle-xe:21-slim-faststart")
-            .withDatabaseName("xe")
+            .withDatabaseName("eclipselink")
             .withUsername("piomin")
             .withPassword("Piot_123");
 

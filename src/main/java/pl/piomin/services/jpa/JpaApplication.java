@@ -38,7 +38,7 @@ public class JpaApplication {
     public DataSource dataSource() {
         final DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("oracle.jdbc.driver.OracleDriver");
-        dataSource.setUrl("jdbc:oracle:thin:@192.168.99.100:1521:xe");
+        dataSource.setUrl("jdbc:oracle:thin:@192.168.99.100:1521/eclipselink");
         dataSource.setUsername("piomin");
         dataSource.setPassword("Piot_123");
         return dataSource;
