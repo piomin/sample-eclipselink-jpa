@@ -5,7 +5,7 @@ spring:
     url: jdbc:oracle:thin:@localhost:1521/eclipselink
     username: piomin
     password: piomin123
-    type: oracle.ucp.jdbc.PoolDataSource
+    type: oracle.ucp.jdbc.UCPDataSource
     oracleucp:
       connection-factory-class-name: oracle.jdbc.pool.OracleDataSource
       sql-for-validate-connection: select * from dual
