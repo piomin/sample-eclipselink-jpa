@@ -12,42 +12,42 @@ import javax.persistence.Version;
 @Table(name = "JPA_CUSTOMER")
 public class Customer {
 
-	@Id
-	@SequenceGenerator(sequenceName = "SEQ_CUSTOMER", allocationSize = 1, initialValue = 1, name = "customerSequence")
-	@GeneratedValue(generator = "customerSequence", strategy = GenerationType.SEQUENCE)
-	private Long id;
-	private String name;
-	
-	@Version
-	private long version;
+    @Id
+    @SequenceGenerator(sequenceName = "SEQ_CUSTOMER", allocationSize = 1, initialValue = 1, name = "customerSequence")
+    @GeneratedValue(generator = "customerSequence", strategy = GenerationType.SEQUENCE)
+    private Long id;
+    private String name;
 
-	public Long getId() {
-		return id;
-	}
+    @Version
+    private long version;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public long getVersion() {
-		return version;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setVersion(long version) {
-		this.version = version;
-	}
+    public long getVersion() {
+        return version;
+    }
 
-	@Override
-	public String toString() {
-		return "Customer [id=" + id + ", name=" + name + "]";
-	}
+    public void setVersion(long version) {
+        this.version = version;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer [id=" + id + ", name=" + name + "]";
+    }
 
 }

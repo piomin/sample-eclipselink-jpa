@@ -20,20 +20,20 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class JpaApplication {
 
-	public static void main(String[] args) {
-		new SpringApplicationBuilder(JpaApplication.class).web(WebApplicationType.SERVLET).run(args);
-	}
-	
-	@Bean
-	public Docket swaggerApi() {
-		return new Docket(DocumentationType.SWAGGER_2)
-			.select()
-				.apis(RequestHandlerSelectors.basePackage("pl.piomin.services.jpa"))
-				.paths(any())
-			.build()
-			.apiInfo(new ApiInfoBuilder().version("1.0").title("JPA API").description("Documentation JPA API v1.0").build());
-	}
-    
+    public static void main(String[] args) {
+        new SpringApplicationBuilder(JpaApplication.class).web(WebApplicationType.SERVLET).run(args);
+    }
+
+    @Bean
+    public Docket swaggerApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+            .select()
+                .apis(RequestHandlerSelectors.basePackage("pl.piomin.services.jpa"))
+                .paths(any())
+            .build()
+            .apiInfo(new ApiInfoBuilder().version("1.0").title("JPA API").description("Documentation JPA API v1.0").build());
+    }
+
     @Bean
     public DataSource dataSource() {
         final DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -43,5 +43,5 @@ public class JpaApplication {
         dataSource.setPassword("Piot_123");
         return dataSource;
     }
-    
+
 }

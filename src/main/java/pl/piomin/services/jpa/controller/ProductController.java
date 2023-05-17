@@ -19,40 +19,40 @@ import pl.piomin.services.jpa.repository.ProductRepository;
 @RequestMapping("/Product")
 public class ProductController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
-	
-	@Autowired
-	ProductRepository repository;
-	
-	@PostMapping
-	public Product add(@RequestBody Product product) {
-		LOGGER.info("Add product: {}", product);
-		return repository.save(product);
-	}
-	
-	@PutMapping
-	public Product update(@RequestBody Product product) {
-		LOGGER.info("Update product: {}", product);
-		return repository.save(product);
-	}
-	
-	@GetMapping("/{id}")
-	public Product findById(@PathVariable("id") Long id) {
-		LOGGER.info("Find product: id={}", id);
-		return repository.findById(id).get();
-	}
-	
-	
-	@GetMapping
-	public Iterable<Product> findAll() {
-		LOGGER.info("Find products");
-		return repository.findAll();
-	}
-	
-	@DeleteMapping("/{id}")
-	public void delete(@PathVariable("id") Long id) {
-		LOGGER.info("Delete product: id={}", id);
-		repository.deleteById(id);
-	}
-	
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
+
+    @Autowired
+    ProductRepository repository;
+
+    @PostMapping
+    public Product add(@RequestBody Product product) {
+        LOGGER.info("Add product: {}", product);
+        return repository.save(product);
+    }
+
+    @PutMapping
+    public Product update(@RequestBody Product product) {
+        LOGGER.info("Update product: {}", product);
+        return repository.save(product);
+    }
+
+    @GetMapping("/{id}")
+    public Product findById(@PathVariable("id") Long id) {
+        LOGGER.info("Find product: id={}", id);
+        return repository.findById(id).orElseThrow();
+    }
+
+
+    @GetMapping
+    public Iterable<Product> findAll() {
+        LOGGER.info("Find products");
+        return repository.findAll();
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable("id") Long id) {
+        LOGGER.info("Delete product: id={}", id);
+        repository.deleteById(id);
+    }
+
 }

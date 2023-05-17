@@ -22,23 +22,25 @@ import org.springframework.transaction.jta.JtaTransactionManager;
 @EnableAutoConfiguration
 public class JpaConfiguration extends JpaBaseConfiguration {
 
-	protected JpaConfiguration(DataSource dataSource, JpaProperties properties, ObjectProvider<JtaTransactionManager> jtaTransactionManager, ObjectProvider<TransactionManagerCustomizers> transactionManagerCustomizers) {
-		super(dataSource, properties, jtaTransactionManager, transactionManagerCustomizers);
-	}
+    protected JpaConfiguration(DataSource dataSource,
+							   JpaProperties properties,
+							   ObjectProvider<JtaTransactionManager> jtaTransactionManager) {
+        super(dataSource, properties, jtaTransactionManager);
+    }
 
-	@Override
-	protected AbstractJpaVendorAdapter createJpaVendorAdapter() {
-		return new EclipseLinkJpaVendorAdapter();
-	}
+    @Override
+    protected AbstractJpaVendorAdapter createJpaVendorAdapter() {
+        return new EclipseLinkJpaVendorAdapter();
+    }
 
-	@Override
-	protected Map<String, Object> getVendorProperties() {
-	    HashMap<String, Object> map = new HashMap<>();
-	    map.put(PersistenceUnitProperties.WEAVING, InstrumentationLoadTimeWeaver.isInstrumentationAvailable() ? "true" : "static");
-	    map.put(PersistenceUnitProperties.DDL_GENERATION, "create-or-extend-tables");
-	    map.put(PersistenceUnitProperties.LOGGING_LEVEL, SessionLog.FINEST_LABEL);
-	    map.put(PersistenceUnitProperties.DATABASE_EVENT_LISTENER, "org.eclipse.persistence.platform.database.oracle.dcn.OracleChangeNotificationListener");
-	    return map;
-	}
-    
+    @Override
+    protected Map<String, Object> getVendorProperties() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put(PersistenceUnitProperties.WEAVING, InstrumentationLoadTimeWeaver.isInstrumentationAvailable() ? "true" : "static");
+        map.put(PersistenceUnitProperties.DDL_GENERATION, "create-or-extend-tables");
+        map.put(PersistenceUnitProperties.LOGGING_LEVEL, SessionLog.FINEST_LABEL);
+        map.put(PersistenceUnitProperties.DATABASE_EVENT_LISTENER, "org.eclipse.persistence.platform.database.oracle.dcn.OracleChangeNotificationListener");
+        return map;
+    }
+
 }
