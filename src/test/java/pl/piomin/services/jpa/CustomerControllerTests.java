@@ -25,7 +25,7 @@ public class CustomerControllerTests {
     static final OracleContainer oracle = new OracleContainer("gvenzl/oracle-xe:21-slim-faststart")
             .withDatabaseName("eclipselink")
             .withUsername("piomin")
-            .withPassword("Piot_123");
+            .withPassword("piomin123");
 
     @DynamicPropertySource
     static void oracleProperties(DynamicPropertyRegistry registry) {

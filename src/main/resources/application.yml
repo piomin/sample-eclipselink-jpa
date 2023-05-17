@@ -1,6 +1,10 @@
 spring:
   application:
     name: jpa-service
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521/eclipselink
+    username: piomin
+    password: piomin123
   jpa:
     show-sql: true
     properties:
