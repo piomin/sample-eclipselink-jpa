@@ -16,7 +16,7 @@ import pl.piomin.services.jpa.model.Product;
 import pl.piomin.services.jpa.repository.ProductRepository;
 
 @RestController
-@RequestMapping("/Product")
+@RequestMapping("/product")
 public class ProductController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
@@ -24,13 +24,13 @@ public class ProductController {
     @Autowired
     ProductRepository repository;
 
-    @PostMapping
+    @PostMapping("/")
     public Product add(@RequestBody Product product) {
         LOGGER.info("Add product: {}", product);
         return repository.save(product);
     }
 
-    @PutMapping
+    @PutMapping("/")
     public Product update(@RequestBody Product product) {
         LOGGER.info("Update product: {}", product);
         return repository.save(product);
@@ -43,7 +43,7 @@ public class ProductController {
     }
 
 
-    @GetMapping
+    @GetMapping("/")
     public Iterable<Product> findAll() {
         LOGGER.info("Find products");
         return repository.findAll();

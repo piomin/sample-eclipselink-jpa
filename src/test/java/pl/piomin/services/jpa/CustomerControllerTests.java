@@ -7,6 +7,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.OracleContainer;
@@ -21,16 +22,19 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CustomerControllerTests {
 
+    static Long id;
+
     @Container
+    @ServiceConnection
     static final OracleContainer oracle = new OracleContainer("gvenzl/oracle-xe:21-slim-faststart")
             .withDatabaseName("eclipselink")
             .withUsername("piomin")
             .withPassword("piomin123");
 
-    @DynamicPropertySource
-    static void oracleProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", oracle::getJdbcUrl);
-    }
+//    @DynamicPropertySource
+//    static void oracleProperties(DynamicPropertyRegistry registry) {
+//        registry.add("spring.datasource.url", oracle::getJdbcUrl);
+//    }
 
     @Autowired
     TestRestTemplate restTemplate;
@@ -42,21 +46,22 @@ public class CustomerControllerTests {
         c.setName("Test1");
         c = restTemplate.postForObject("/customer/", c, Customer.class);
         assertNotNull(c);
-//        assertNotNull(c.getId());
+        assertNotNull(c.getId());
+        id = c.getId();
     }
 
     @Test
     @Order(2)
     void findById() {
-        Customer customer = restTemplate.getForObject("/customer/{id}", Customer.class, 1);
+        Customer customer = restTemplate.getForObject("/customer/{id}", Customer.class, id);
         assertNotNull(customer);
-//        assertEquals(1, customer.getId());
+        assertEquals(id, customer.getId());
     }
 
     @Test
     @Order(2)
     void findAll() {
         Customer[] customers = restTemplate.getForObject("/customer", Customer[].class);
-//        assertTrue(customers.length > 0);
+        assertTrue(customers.length > 0);
     }
 }

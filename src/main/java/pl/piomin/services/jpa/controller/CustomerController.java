@@ -26,7 +26,6 @@ public class CustomerController {
     CustomerRepository repository;
 
     @PostMapping("/")
-//    @Transactional
     public Customer add(@RequestBody Customer customer) {
         LOGGER.info("Add product: {}", customer);
         return repository.save(customer);

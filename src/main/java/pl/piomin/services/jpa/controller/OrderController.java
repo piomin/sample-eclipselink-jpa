@@ -24,13 +24,13 @@ public class OrderController {
     @Autowired
     OrderRepository repository;
 
-    @PostMapping
+    @PostMapping("/")
     public Order add(@RequestBody Order order) {
         LOGGER.info("Add order: {}", order);
         return repository.save(order);
     }
 
-    @PutMapping
+    @PutMapping("/")
     public Order update(@RequestBody Order order) {
         LOGGER.info("Update order: {}", order);
         return repository.save(order);
@@ -43,7 +43,7 @@ public class OrderController {
     }
 
 
-    @GetMapping
+    @GetMapping("/")
     public Iterable<Order> findAll() {
         LOGGER.info("Find orders");
         return repository.findAll();
