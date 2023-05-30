@@ -1,5 +1,6 @@
 package pl.piomin.services.jpa.controller;
 
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +25,14 @@ public class CustomerController {
     @Autowired
     CustomerRepository repository;
 
-    @PostMapping
+    @PostMapping("/")
+//    @Transactional
     public Customer add(@RequestBody Customer customer) {
         LOGGER.info("Add product: {}", customer);
         return repository.save(customer);
     }
 
-    @PutMapping
+    @PutMapping("/")
     public Customer update(@RequestBody Customer customer) {
         LOGGER.info("Update product: {}", customer);
         return repository.save(customer);
