@@ -62,7 +62,7 @@
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>org.eclipse.persistence.oracle</artifactId>
-            <version>4.0.6</version>
+            <version>4.0.7</version>
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
