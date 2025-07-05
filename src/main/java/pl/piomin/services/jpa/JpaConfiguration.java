@@ -34,7 +34,7 @@ public class JpaConfiguration extends JpaBaseConfiguration {
     }
 
     @Override
-    protected Map<String, Object> getVendorProperties() {
+    protected Map<String, Object> getVendorProperties(DataSource dataSource) {
         HashMap<String, Object> map = new HashMap<>();
         map.put(PersistenceUnitProperties.WEAVING, InstrumentationLoadTimeWeaver.isInstrumentationAvailable() ? "true" : "static");
         map.put(PersistenceUnitProperties.DDL_GENERATION, "create-or-extend-tables");
