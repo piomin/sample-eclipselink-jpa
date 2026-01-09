@@ -4,7 +4,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.test.web.servlet.client.RestTestClient;
 import org.springframework.web.context.WebApplicationContext;
 import org.testcontainers.containers.OracleContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -29,11 +29,11 @@ public class CustomerControllerTests {
 
     @Autowired
     private WebApplicationContext context;
-    private WebTestClient webTestClient;
+    private RestTestClient webTestClient;
 
     @BeforeEach
     void setUp() {
-        this.webTestClient = WebTestClient.bindToApplicationContext(context).build();
+        this.webTestClient = RestTestClient.bindToApplicationContext(context).build();
     }
 
     @Test
@@ -44,7 +44,7 @@ public class CustomerControllerTests {
         
         webTestClient.post()
                 .uri("/customer/")
-                .bodyValue(customer)
+                .body(customer)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Customer.class)
@@ -76,7 +76,7 @@ public class CustomerControllerTests {
                 .uri("/customer")
                 .exchange()
                 .expectStatus().isOk()
-                .expectBodyList(Customer.class)
-                .value(customers -> assertFalse(customers.isEmpty()));
+                .expectBody(Customer[].class)
+                .value(customers -> assertNotEquals(0, customers.length));
     }
 }
