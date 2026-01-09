@@ -1,15 +1,11 @@
 package pl.piomin.services.jpa;
 
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.web.context.WebApplicationContext;
 import org.testcontainers.containers.OracleContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -31,37 +27,56 @@ public class CustomerControllerTests {
             .withUsername("piomin")
             .withPassword("piomin123");
 
-//    @DynamicPropertySource
-//    static void oracleProperties(DynamicPropertyRegistry registry) {
-//        registry.add("spring.datasource.url", oracle::getJdbcUrl);
-//    }
-
     @Autowired
-    TestRestTemplate restTemplate;
+    private WebApplicationContext context;
+    private WebTestClient webTestClient;
+
+    @BeforeEach
+    void setUp() {
+        this.webTestClient = WebTestClient.bindToApplicationContext(context).build();
+    }
 
     @Test
     @Order(1)
     void add() {
-        Customer c = new Customer();
-        c.setName("Test1");
-        c = restTemplate.postForObject("/customer/", c, Customer.class);
-        assertNotNull(c);
-        assertNotNull(c.getId());
-        id = c.getId();
+        Customer customer = new Customer();
+        customer.setName("Test1");
+        
+        webTestClient.post()
+                .uri("/customer/")
+                .bodyValue(customer)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Customer.class)
+                .value(c -> {
+                    assertNotNull(c);
+                    assertNotNull(c.getId());
+                    id = c.getId();
+                });
     }
 
     @Test
     @Order(2)
     void findById() {
-        Customer customer = restTemplate.getForObject("/customer/{id}", Customer.class, id);
-        assertNotNull(customer);
-        assertEquals(id, customer.getId());
+        webTestClient.get()
+                .uri("/customer/{id}", id)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Customer.class)
+                .value(customer -> {
+                    assertNotNull(customer);
+                    assertEquals(id, customer.getId());
+                });
     }
 
     @Test
-    @Order(2)
+    @Order(3)
     void findAll() {
-        Customer[] customers = restTemplate.getForObject("/customer", Customer[].class);
-        assertTrue(customers.length > 0);
+        webTestClient.get()
+                .uri("/customer")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Customer.class)
+                .value(customers -> assertFalse(customers.isEmpty()));
     }
 }
