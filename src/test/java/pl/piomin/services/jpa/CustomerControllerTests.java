@@ -6,9 +6,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.test.web.servlet.client.RestTestClient;
 import org.springframework.web.context.WebApplicationContext;
-import org.testcontainers.containers.OracleContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.oracle.OracleContainer;
 import pl.piomin.services.jpa.model.Customer;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,7 +22,7 @@ public class CustomerControllerTests {
 
     @Container
     @ServiceConnection
-    static final OracleContainer oracle = new OracleContainer("gvenzl/oracle-xe:21-slim-faststart")
+    static final OracleContainer oracle = new OracleContainer("gvenzl/oracle-free:23.4-slim-faststart")
             .withDatabaseName("eclipselink")
             .withUsername("piomin")
             .withPassword("piomin123");
